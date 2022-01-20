@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'my_icon_widget.dart';
+import 'reusable_column.dart';
 
 const ActiveColour = Color(0xFF1D1E33);
+const InActiveColour = Color(0xFF111328);
 const bottomContainerHeight = 40.0 * 2;
 
 class InputPage extends StatefulWidget {
@@ -9,6 +14,28 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  Color maleColor = InActiveColour;
+  Color femaleColor = InActiveColour;
+
+  void updateColor(int maleFemale) {
+    if (maleFemale == 1) {
+      if (maleColor == InActiveColour) {
+        maleColor = ActiveColour;
+        femaleColor = InActiveColour;
+      } else {
+        maleColor = InActiveColour;
+      }
+    }
+    if (maleFemale == 2) {
+      if (femaleColor == InActiveColour) {
+        femaleColor = ActiveColour;
+        maleColor = InActiveColour;
+      } else {
+        femaleColor = InActiveColour;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,23 +47,68 @@ class _InputPageState extends State<InputPage> {
             Expanded(
               child: Row(
                 children: [
-                  ReusableColumn(c: ActiveColour),
-                  ReusableColumn(c: ActiveColour),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          this.updateColor(1);
+                        });
+                      },
+                      child: ReusableColumn(
+                        c: this.maleColor,
+                        w: MyIconWidget(
+                          icon: FontAwesomeIcons.mars,
+                          text: 'Male',
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          this.updateColor(2);
+                        });
+                      },
+                      child: ReusableColumn(
+                        c: this.femaleColor,
+                        w: MyIconWidget(
+                          icon: FontAwesomeIcons.venus,
+                          text: 'Female',
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
             Expanded(
               child: Row(
                 children: [
-                  ReusableColumn(c: ActiveColour),
+                  Expanded(
+                    child: ReusableColumn(
+                      c: ActiveColour,
+                      w: MyIconWidget(),
+                    ),
+                  ),
                 ],
               ),
             ),
             Expanded(
               child: Row(
                 children: [
-                  ReusableColumn(c: ActiveColour),
-                  ReusableColumn(c: ActiveColour),
+                  Expanded(
+                    child: ReusableColumn(
+                      c: ActiveColour,
+                      w: MyIconWidget(),
+                    ),
+                  ),
+                  Expanded(
+                    child: ReusableColumn(
+                      c: ActiveColour,
+                      w: MyIconWidget(),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -48,24 +120,5 @@ class _InputPageState extends State<InputPage> {
             )
           ],
         ));
-  }
-}
-
-class ReusableColumn extends StatelessWidget {
-  final Color c;
-
-  ReusableColumn({
-    @required this.c,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.all(15.0),
-        decoration:
-            BoxDecoration(color: c, borderRadius: BorderRadius.circular(10.0)),
-      ),
-    );
   }
 }
