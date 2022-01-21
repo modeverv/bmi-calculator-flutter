@@ -19,27 +19,7 @@ enum Gender {
 }
 
 class _InputPageState extends State<InputPage> {
-  Color maleColor = InActiveColour;
-  Color femaleColor = InActiveColour;
-
-  void updateColor(Gender maleFemale) {
-    if (maleFemale == Gender.male) {
-      if (maleColor == InActiveColour) {
-        maleColor = ActiveColour;
-        femaleColor = InActiveColour;
-      } else {
-        maleColor = InActiveColour;
-      }
-    }
-    if (maleFemale == Gender.female) {
-      if (femaleColor == InActiveColour) {
-        femaleColor = ActiveColour;
-        maleColor = InActiveColour;
-      } else {
-        femaleColor = InActiveColour;
-      }
-    }
-  }
+  Gender selectedGender = Gender.male;
 
   @override
   Widget build(BuildContext context) {
@@ -53,34 +33,34 @@ class _InputPageState extends State<InputPage> {
               child: Row(
                 children: [
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
+                    child: ReusableColumn(
+                      f: () {
                         setState(() {
-                          this.updateColor(Gender.male);
+                          this.selectedGender = Gender.male;
                         });
                       },
-                      child: ReusableColumn(
-                        c: this.maleColor,
-                        w: MyIconWidget(
-                          icon: FontAwesomeIcons.mars,
-                          text: 'Male',
-                        ),
+                      c: this.selectedGender == Gender.male
+                          ? ActiveColour
+                          : InActiveColour,
+                      w: MyIconWidget(
+                        icon: FontAwesomeIcons.mars,
+                        text: 'Male',
                       ),
                     ),
                   ),
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
+                    child: ReusableColumn(
+                      f: () {
                         setState(() {
-                          this.updateColor(Gender.female);
+                          this.selectedGender = Gender.female;
                         });
                       },
-                      child: ReusableColumn(
-                        c: this.femaleColor,
-                        w: MyIconWidget(
-                          icon: FontAwesomeIcons.venus,
-                          text: 'Female',
-                        ),
+                      c: this.selectedGender == Gender.female
+                          ? ActiveColour
+                          : InActiveColour,
+                      w: MyIconWidget(
+                        icon: FontAwesomeIcons.venus,
+                        text: 'Female',
                       ),
                     ),
                   ),
@@ -92,6 +72,7 @@ class _InputPageState extends State<InputPage> {
                 children: [
                   Expanded(
                     child: ReusableColumn(
+                      f: () {},
                       c: ActiveColour,
                       w: MyIconWidget(),
                     ),
@@ -104,12 +85,14 @@ class _InputPageState extends State<InputPage> {
                 children: [
                   Expanded(
                     child: ReusableColumn(
+                      f: () {},
                       c: ActiveColour,
                       w: MyIconWidget(),
                     ),
                   ),
                   Expanded(
                     child: ReusableColumn(
+                      f: () {},
                       c: ActiveColour,
                       w: MyIconWidget(),
                     ),
