@@ -18,6 +18,8 @@ enum Gender {
 class _InputPageState extends State<InputPage> {
   Gender selectedGender = Gender.male;
   int height = 180;
+  int weight = 60;
+  int age = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -125,14 +127,80 @@ class _InputPageState extends State<InputPage> {
                     child: ReusableColumn(
                       f: () {},
                       c: kActiveColour,
-                      w: MyIconWidget(),
+                      w: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "WEIGHT",
+                          ),
+                          Text(
+                            this.weight.toString(),
+                            style: TextStyle(fontSize: 50.0),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RoundIconButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: () {
+                                    setState(() {
+                                      this.weight--;
+                                    });
+                                  }),
+                              SizedBox(
+                                width: 10.0,
+                              ),
+                              RoundIconButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPressed: () {
+                                    setState(() {
+                                      this.weight++;
+                                    });
+                                  }),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
                     child: ReusableColumn(
                       f: () {},
                       c: kActiveColour,
-                      w: MyIconWidget(),
+                      w: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "AGE",
+                          ),
+                          Text(
+                            this.age.toString(),
+                            style: TextStyle(fontSize: 50.0),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RoundIconButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: () {
+                                    setState(() {
+                                      this.age--;
+                                    });
+                                  }),
+                              SizedBox(
+                                width: 10.0,
+                              ),
+                              RoundIconButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPressed: () {
+                                    setState(() {
+                                      this.age++;
+                                    });
+                                  }),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -146,5 +214,25 @@ class _InputPageState extends State<InputPage> {
             )
           ],
         ));
+  }
+}
+
+class RoundIconButton extends StatelessWidget {
+  const RoundIconButton({@required this.icon, @required this.onPressed});
+  final Function onPressed;
+  final IconData icon;
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: onPressed,
+      elevation: 0,
+      child: Icon(icon),
+      constraints: BoxConstraints.tightFor(
+        width: 56.0,
+        height: 56.0,
+      ),
+      shape: CircleBorder(),
+      fillColor: Color(0xFF4C4F5E),
+    );
   }
 }
