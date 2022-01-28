@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'constants.dart';
-import 'my_icon_widget.dart';
+import '../compornents/bottom_button.dart';
+import '../compornents/my_icon_widget.dart';
+import '../compornents/reusable_column.dart';
+import '../compornents/round_icon.dart';
+import '../constants.dart';
 import 'result_page.dart';
-import 'reusable_column.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -37,15 +39,15 @@ class _InputPageState extends State<InputPage> {
                 children: [
                   Expanded(
                     child: ReusableColumn(
-                      f: () {
+                      onTap: () {
                         setState(() {
                           this.selectedGender = Gender.male;
                         });
                       },
-                      c: this.selectedGender == Gender.male
+                      color: this.selectedGender == Gender.male
                           ? kActiveColour
                           : kInActiveColour,
-                      w: MyIconWidget(
+                      widget: MyIconWidget(
                         icon: FontAwesomeIcons.mars,
                         text: 'Male',
                       ),
@@ -53,15 +55,15 @@ class _InputPageState extends State<InputPage> {
                   ),
                   Expanded(
                     child: ReusableColumn(
-                      f: () {
+                      onTap: () {
                         setState(() {
                           this.selectedGender = Gender.female;
                         });
                       },
-                      c: this.selectedGender == Gender.female
+                      color: this.selectedGender == Gender.female
                           ? kActiveColour
                           : kInActiveColour,
-                      w: MyIconWidget(
+                      widget: MyIconWidget(
                         icon: FontAwesomeIcons.venus,
                         text: 'Female',
                       ),
@@ -75,9 +77,9 @@ class _InputPageState extends State<InputPage> {
                 children: [
                   Expanded(
                     child: ReusableColumn(
-                      f: () {},
-                      c: kActiveColour,
-                      w: Column(
+                      onTap: () {},
+                      color: kActiveColour,
+                      widget: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text('HEIGHT'),
@@ -126,9 +128,9 @@ class _InputPageState extends State<InputPage> {
                 children: [
                   Expanded(
                     child: ReusableColumn(
-                      f: () {},
-                      c: kActiveColour,
-                      w: Column(
+                      onTap: () {},
+                      color: kActiveColour,
+                      widget: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
@@ -166,9 +168,9 @@ class _InputPageState extends State<InputPage> {
                   ),
                   Expanded(
                     child: ReusableColumn(
-                      f: () {},
-                      c: kActiveColour,
-                      w: Column(
+                      onTap: () {},
+                      color: kActiveColour,
+                      widget: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
@@ -207,44 +209,13 @@ class _InputPageState extends State<InputPage> {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ResultPage()),
-                );
-              },
-              child: Container(
-                child: Text(
-                  'CALC',
-                ),
-                color: Color(0xFFEB1555),
-                width: double.infinity,
-                height: kBottomContainerHeight,
-                margin: EdgeInsets.only(top: 10.0),
-              ),
-            )
+            BottomButton(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ResultPage()));
+                },
+                titleText: 'CALCULATE')
           ],
         ));
-  }
-}
-
-class RoundIconButton extends StatelessWidget {
-  const RoundIconButton({@required this.icon, @required this.onPressed});
-  final Function onPressed;
-  final IconData icon;
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: onPressed,
-      elevation: 0,
-      child: Icon(icon),
-      constraints: BoxConstraints.tightFor(
-        width: 56.0,
-        height: 56.0,
-      ),
-      shape: CircleBorder(),
-      fillColor: Color(0xFF4C4F5E),
-    );
   }
 }
