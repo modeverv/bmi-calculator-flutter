@@ -1,15 +1,23 @@
 import 'package:bmi_calculator/compornents/bottom_button.dart';
 import 'package:bmi_calculator/compornents/reusable_column.dart';
 import 'package:bmi_calculator/constants.dart';
+import 'package:bmi_calculator/logic/calculator.dart';
 import 'package:flutter/material.dart';
 
 class ResultPage extends StatelessWidget {
+  final Calculator calc;
+
+  ResultPage({this.calc}) {
+    this.calc.calcBMI();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('BMI CALCULATOR')),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Container(
@@ -29,17 +37,17 @@ class ResultPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Normal',
+                        calc.getResult().toUpperCase(),
                         style: kResultTextStyle,
                       ),
                       Text(
-                        '18.3',
+                        calc.calcBMI(),
                         style: kBMITextSyle,
                       ),
                       Container(
                         padding: EdgeInsets.all(15.0),
                         child: Text(
-                          'Youra aasfdas fdsafdsa fdsafdsa fdsafdsa. fdsafdsa. fdsafdsafdas.',
+                          calc.getInterpretation(),
                           textAlign: TextAlign.center,
                           style: kBodyTextStyle,
                         ),
